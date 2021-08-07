@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import za.co.codet.ordermanagementservice.model.Order;
 import za.co.codet.ordermanagementservice.repository.OrderRepository;
 
+import java.util.Optional;
+
 @Service
 public class OrderService implements ServiceBase<Order> {
 
@@ -20,6 +22,14 @@ public class OrderService implements ServiceBase<Order> {
 
     @Override
     public Order saveOrUpdate(Order entity) {
-        return repository.save(entity);
+        Optional<Order> order = repository.findById(entity.getId());
+        if (order.isEmpty()) {
+            return repository.save(entity);
+        }
+
+        return order
+                .filter(e -> !e.getStatus().equals(entity.getStatus()))
+                .map(repository::save)
+                .orElse(entity);
     }
 }

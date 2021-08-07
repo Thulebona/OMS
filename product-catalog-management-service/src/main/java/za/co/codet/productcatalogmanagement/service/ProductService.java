@@ -5,7 +5,6 @@ import za.co.codet.productcatalogmanagement.model.Product;
 import za.co.codet.productcatalogmanagement.repository.ProductRepository;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ProductService implements ServiceBase<Product> {

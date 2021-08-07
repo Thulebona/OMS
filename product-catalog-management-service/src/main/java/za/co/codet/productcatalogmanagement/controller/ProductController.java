@@ -1,27 +1,34 @@
 package za.co.codet.productcatalogmanagement.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import za.co.codet.productcatalogmanagement.client.InventoryClient;
 import za.co.codet.productcatalogmanagement.model.Product;
 import za.co.codet.productcatalogmanagement.service.ServiceBase;
 
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "product")
 public class ProductController {
 
     private final ServiceBase<Product> service;
+    private final InventoryClient inventoryClient;
 
-    public ProductController(ServiceBase<Product> service) {
+    public ProductController(ServiceBase<Product> service,
+                             InventoryClient inventoryClient) {
         this.service = service;
+        this.inventoryClient = inventoryClient;
     }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Product> findAllProducts() {
-        return service.findAll();
+        return service.findAll().stream()
+                .filter(p -> inventoryClient.isAvailable(p.getSkuCode()))
+                .collect(Collectors.toList());
+
     }
 
     @GetMapping(value = "{id}")
