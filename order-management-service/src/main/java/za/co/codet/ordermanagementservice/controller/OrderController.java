@@ -21,7 +21,7 @@ public class OrderController {
     @GetMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
     public Order findById(@PathVariable Long id) {
-        return new Order();
+        return orderService.findById(id);
 //        return mapper.map(order);
     }
 
@@ -29,7 +29,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public Order createOrder(@RequestBody Order orderDto) {
 //        order = mapper.map(orderDto);
-        return orderService.saveOrUpdate(order);
+        return orderService.saveOrUpdate(orderDto);
 //        return mapper.map(order);
     }
 
@@ -37,7 +37,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public Order updateOrder(@RequestBody Order orderDto) {
 //        order = mapper.map(orderDto);
-        return orderService.saveOrUpdate(order);
+        return orderService.saveOrUpdate(orderDto);
 //        return mapper.map(order);
     }
 
