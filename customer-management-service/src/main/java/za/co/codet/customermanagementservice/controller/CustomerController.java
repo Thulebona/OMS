@@ -1,5 +1,6 @@
 package za.co.codet.customermanagementservice.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.codet.customermanagementservice.model.Customer;
@@ -8,14 +9,11 @@ import za.co.codet.customermanagementservice.service.ServiceBase;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("customer")
 public class CustomerController {
 
     private final ServiceBase<Customer> customerService;
-
-    public CustomerController(ServiceBase<Customer> customerService) {
-        this.customerService = customerService;
-    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

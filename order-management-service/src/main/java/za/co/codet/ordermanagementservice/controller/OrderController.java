@@ -1,5 +1,6 @@
 package za.co.codet.ordermanagementservice.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import za.co.codet.ordermanagementservice.service.ServiceBase;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("order")
 public class OrderController {
 
@@ -22,13 +24,6 @@ public class OrderController {
     private final InventoryClient inventoryClient;
     private final CustomerClient customerClient;
 
-    public OrderController(OrderMapper mapper, ServiceBase<Order> orderService,
-                           InventoryClient inventoryClient, CustomerClient customerClient) {
-        this.mapper = mapper;
-        this.orderService = orderService;
-        this.inventoryClient = inventoryClient;
-        this.customerClient = customerClient;
-    }
 
     @GetMapping(value = "{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +33,7 @@ public class OrderController {
     }
 
     @PostMapping("create")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public OrderDto createOrder(@RequestBody OrderDto orderDto) {
 
         if (orderDto.getOrderItems().isEmpty()) {
@@ -58,6 +53,7 @@ public class OrderController {
     public OrderDto updateStatus(@RequestBody UpdateStatusInput statusInput) {
         order = orderService.findById(statusInput.getId());
         order.setStatus(statusInput.getStatus());
+        orderService.saveOrUpdate(order);
         return mapper.map(order);
     }
 

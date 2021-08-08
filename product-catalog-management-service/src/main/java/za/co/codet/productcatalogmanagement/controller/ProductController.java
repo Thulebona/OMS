@@ -1,5 +1,6 @@
 package za.co.codet.productcatalogmanagement.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.codet.productcatalogmanagement.client.InventoryClient;
@@ -10,17 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "product")
 public class ProductController {
 
     private final ServiceBase<Product> service;
     private final InventoryClient inventoryClient;
-
-    public ProductController(ServiceBase<Product> service,
-                             InventoryClient inventoryClient) {
-        this.service = service;
-        this.inventoryClient = inventoryClient;
-    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

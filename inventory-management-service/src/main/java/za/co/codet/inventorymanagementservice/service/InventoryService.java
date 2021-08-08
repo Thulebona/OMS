@@ -1,5 +1,6 @@
 package za.co.codet.inventorymanagementservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import za.co.codet.inventorymanagementservice.model.Inventory;
 import za.co.codet.inventorymanagementservice.repository.InventoryRepository;
@@ -8,13 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class InventoryService implements ServiceBase<Inventory> {
 
     private final InventoryRepository repository;
-
-    public InventoryService(InventoryRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Inventory findBySkuCode(String skuCode) {

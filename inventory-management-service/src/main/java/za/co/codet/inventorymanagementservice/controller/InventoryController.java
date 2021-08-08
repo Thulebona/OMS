@@ -1,5 +1,6 @@
 package za.co.codet.inventorymanagementservice.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.codet.inventorymanagementservice.model.Inventory;
@@ -8,14 +9,11 @@ import za.co.codet.inventorymanagementservice.service.ServiceBase;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("inventory")
 public class InventoryController {
 
     private final ServiceBase<Inventory> inventoryService;
-
-    public InventoryController(ServiceBase<Inventory> inventoryService) {
-        this.inventoryService = inventoryService;
-    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

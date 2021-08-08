@@ -1,5 +1,6 @@
 package za.co.codet.customermanagementservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import za.co.codet.customermanagementservice.model.Customer;
 import za.co.codet.customermanagementservice.respository.CustomerRepository;
@@ -7,13 +8,10 @@ import za.co.codet.customermanagementservice.respository.CustomerRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService implements ServiceBase<Customer> {
 
     private final CustomerRepository repository;
-
-    public CustomerService(CustomerRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Customer> findAll() {

@@ -1,5 +1,6 @@
 package za.co.codet.ordermanagementservice.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import za.co.codet.ordermanagementservice.enums.OrderStatus;
 import za.co.codet.ordermanagementservice.model.Order;
@@ -8,13 +9,10 @@ import za.co.codet.ordermanagementservice.repository.OrderRepository;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class OrderService implements ServiceBase<Order> {
 
     private final OrderRepository repository;
-
-    public OrderService(OrderRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Order findById(Long id) {
