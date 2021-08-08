@@ -5,6 +5,6 @@ import za.co.codet.inventorymanagementservice.model.Inventory;
 
 import java.util.Optional;
 
-public interface InventoryRepository extends CrudRepository<Inventory, Long> {
-    Optional<Inventory> findBySkuCode(String skuCode);
+public interface InventoryRepository extends CrudRepository<Inventory, String> {
+//    Optional<Inventory> findBySkuCode(String skuCode);
 }

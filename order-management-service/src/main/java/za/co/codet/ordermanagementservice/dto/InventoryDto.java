@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class InventoryDto {
-    private Long id;
     private String skuCode;
+    private String barCode;
     private Integer quantity;
 }

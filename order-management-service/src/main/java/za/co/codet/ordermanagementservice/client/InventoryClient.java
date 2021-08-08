@@ -13,6 +13,9 @@ public interface InventoryClient {
     @GetMapping("available/{skuCode}")
     boolean isAvailable(@PathVariable String skuCode);
 
+    @GetMapping("{skuCode}")
+    InventoryDto findBySkuCode(@PathVariable String skuCode);
+
     @PostMapping("update")
     InventoryDto update(@RequestBody InventoryDto inventory);
 }

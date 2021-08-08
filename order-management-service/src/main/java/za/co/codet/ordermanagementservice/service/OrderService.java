@@ -1,10 +1,9 @@
 package za.co.codet.ordermanagementservice.service;
 
 import org.springframework.stereotype.Service;
+import za.co.codet.ordermanagementservice.enums.OrderStatus;
 import za.co.codet.ordermanagementservice.model.Order;
 import za.co.codet.ordermanagementservice.repository.OrderRepository;
-
-import java.util.Optional;
 
 @Service
 public class OrderService implements ServiceBase<Order> {
@@ -21,15 +20,15 @@ public class OrderService implements ServiceBase<Order> {
     }
 
     @Override
-    public Order saveOrUpdate(Order entity) {
-        Optional<Order> order = repository.findById(entity.getId());
-        if (order.isEmpty()) {
-            return repository.save(entity);
-        }
+    public void saveOrUpdate(Order entity) {
 
-        return order
-                .filter(e -> !e.getStatus().equals(entity.getStatus()))
-                .map(repository::save)
-                .orElse(entity);
+        if (entity.getId() == null) {
+            entity.setStatus(OrderStatus.CONFIRMED);
+            repository.save(entity);
+        } else {
+            repository.findById(entity.getId())
+                    .filter(e -> !e.getStatus().equals(entity.getStatus()))
+                    .map(repository::save);
+        }
     }
 }

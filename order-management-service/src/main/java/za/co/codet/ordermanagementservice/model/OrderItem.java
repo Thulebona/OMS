@@ -13,12 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderItem {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String skuCode;
-    private String description;
     private BigDecimal price;
-    private Integer quantity;
 }

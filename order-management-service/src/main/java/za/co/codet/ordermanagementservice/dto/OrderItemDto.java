@@ -1,5 +1,6 @@
 package za.co.codet.ordermanagementservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class OrderItemDto {
-    private Long id;
+    @JsonProperty(required = true)
     private String skuCode;
-    private String description;
     private BigDecimal price;
 }

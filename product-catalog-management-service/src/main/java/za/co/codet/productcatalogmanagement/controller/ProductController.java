@@ -26,7 +26,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public List<Product> findAllProducts() {
         return service.findAll().stream()
-                .filter(p -> inventoryClient.isAvailable(p.getSkuCode()))
+                .filter(p -> inventoryClient.isAvailable(p.getSkuCode())) //todo avoid looping api calls
                 .collect(Collectors.toList());
 
     }

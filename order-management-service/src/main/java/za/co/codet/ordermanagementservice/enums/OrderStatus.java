@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum OrderStatus {
     SHIPPED("shipped"),
     CANCELLED("cancelled"),
-    READY_FOR_DELIVERY("ready for delivery"),
+    CONFIRMED("confirmed"),
     PENDING_PAYMENT("pending client payment");
     private final String value;
 }

@@ -21,7 +21,7 @@ public class Order {
     private Long id;
     private Long customerId;
     private OrderStatus status;
-    private String orderNumber = UUID.randomUUID().toString();
+    private final String orderNumber = UUID.randomUUID().toString();
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 }

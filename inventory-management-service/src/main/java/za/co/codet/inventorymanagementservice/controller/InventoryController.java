@@ -23,22 +23,24 @@ public class InventoryController {
         return inventoryService.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{skuCode}")
     @ResponseStatus(HttpStatus.OK)
-    public Inventory findById(@PathVariable Long id) {
-        return inventoryService.findById(id);
+    public Inventory findById(@PathVariable String skuCode) {
+        return inventoryService.findBySkuCode(skuCode);
     }
 
     @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
     public Inventory create(@RequestBody Inventory inventory) {
-        return inventoryService.saveOrUpdate(inventory);
+        inventoryService.saveOrUpdate(inventory);
+        return inventory;
     }
 
     @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
     public Inventory update(@RequestBody Inventory inventory) {
-        return inventoryService.saveOrUpdate(inventory);
+        inventoryService.saveOrUpdate(inventory);
+        return inventory;
     }
 
     @ResponseStatus(HttpStatus.OK)
