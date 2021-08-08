@@ -7,7 +7,6 @@ import za.co.codet.ordermanagementservice.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Entity
@@ -21,7 +20,7 @@ public class Order {
     private Long id;
     private Long customerId;
     private OrderStatus status;
-    private final String orderNumber = UUID.randomUUID().toString();
+    private String orderNumber;
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 }

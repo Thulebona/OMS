@@ -14,6 +14,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String skuCode;
+    private boolean isInStock;
     private BigDecimal price;
 }

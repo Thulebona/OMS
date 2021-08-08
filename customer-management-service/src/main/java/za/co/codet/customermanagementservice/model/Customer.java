@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
@@ -23,6 +20,6 @@ public class Customer {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 }

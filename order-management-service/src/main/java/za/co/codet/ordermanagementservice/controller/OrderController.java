@@ -1,14 +1,17 @@
 package za.co.codet.ordermanagementservice.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.codet.ordermanagementservice.client.CustomerClient;
 import za.co.codet.ordermanagementservice.client.InventoryClient;
 import za.co.codet.ordermanagementservice.dto.OrderDto;
+import za.co.codet.ordermanagementservice.dto.UpdateStatusInput;
 import za.co.codet.ordermanagementservice.mapper.OrderMapper;
 import za.co.codet.ordermanagementservice.model.Order;
 import za.co.codet.ordermanagementservice.service.ServiceBase;
 
+@Slf4j
 @RestController
 @RequestMapping("order")
 public class OrderController {
@@ -19,10 +22,8 @@ public class OrderController {
     private final InventoryClient inventoryClient;
     private final CustomerClient customerClient;
 
-    public OrderController(OrderMapper mapper,
-                           ServiceBase<Order> orderService,
-                           InventoryClient inventoryClient,
-                           CustomerClient customerClient) {
+    public OrderController(OrderMapper mapper, ServiceBase<Order> orderService,
+                           InventoryClient inventoryClient, CustomerClient customerClient) {
         this.mapper = mapper;
         this.orderService = orderService;
         this.inventoryClient = inventoryClient;
@@ -39,17 +40,24 @@ public class OrderController {
     @PostMapping("create")
     @ResponseStatus(HttpStatus.OK)
     public OrderDto createOrder(@RequestBody OrderDto orderDto) {
+
+        if (orderDto.getOrderItems().isEmpty()) {
+            throw new RuntimeException("add items to order");
+        }
+        if (!customerClient.existById(orderDto.getCustomerId())) {
+            throw new RuntimeException(String.format("Customer ID: %s does not exist", orderDto.getCustomerId()));
+        }
         order = mapper.map(orderDto);
-        order.getOrderItems().removeIf(o -> inventoryClient.isAvailable(o.getSkuCode()));
+        order.getOrderItems().forEach(item -> item.setInStock(inventoryClient.isAvailable(item.getSkuCode())));
         orderService.saveOrUpdate(order);
         return mapper.map(order);
     }
 
-    @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDto updateOrder(@RequestBody OrderDto orderDto) {
-        order = mapper.map(orderDto);
-        orderService.saveOrUpdate(order);
+    @PostMapping("update/status")
+    public OrderDto updateStatus(@RequestBody UpdateStatusInput statusInput) {
+        order = orderService.findById(statusInput.getId());
+        order.setStatus(statusInput.getStatus());
         return mapper.map(order);
     }
 

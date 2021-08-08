@@ -1,31 +1,31 @@
 package za.co.codet.ordermanagementservice.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import za.co.codet.ordermanagementservice.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
 public class OrderDto {
 
     private Long id;
+    @JsonProperty(required = true)
     private Long customerId;
     private OrderStatus status;
     private String orderNumber;
+    @JsonProperty(required = true)
     private List<OrderItemDto> orderItems = new ArrayList<>();
     private BigDecimal totalCost ;
 
     public BigDecimal getTotalCost() {
         return getOrderItems().stream()
+                .filter(OrderItemDto::isInStock)
                 .map(OrderItemDto::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
